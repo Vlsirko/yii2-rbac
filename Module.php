@@ -1,15 +1,15 @@
 <?php
 
-namespace Umcms\modules\UserPermitions;
+namespace RbacRuleManager;
 
 class Module extends \yii\base\Module
 {
-    public $controllerNamespace = 'Umcms\modules\UserPermitions\controllers';
+    public $controllerNamespace = 'RbacRuleManager\controllers';
 
     public function init()
     {
-        parent::init();
-
+		parent::init();
+		//print('hello');
         // custom initialization code goes here
     }
 }
