@@ -4,7 +4,7 @@ namespace RbacRuleManager\models\command;
 
 use RbacRuleManager\models\command\CommandInterface;
 use RbacRuleManager\models\FileScanner\factories\ScanerAbstractFactory;
-use Yii;
+use RbacRuleManager\models\Messager;
 /**
  * This command is responsible for creating rbac rules
  * and rollback all changes
@@ -16,17 +16,27 @@ class RuleCommand implements CommandInterface {
 	public function run()
 	{
 		$scaner = ScanerAbstractFactory::getFactoryByCode(ScanerAbstractFactory::CONTROLLER_FACTORY)
-				->getScanner()
-				->setScanPathes($this->getScanPathes());
-		
+			->getScanner()
+			->setScanPathes($this->getScanPathes());
+
 		$controllerFiles = $scaner->getFiles();
+
+		foreach ($controllerFiles as $controller) {
+			$notUsedPermissions = $controller->getNotUsedPermissions();
+			
+			foreach($notUsedPermissions as $permition){
+				$permition->remove();
+				Messager::getInstance()->showMessage('Permission ' . $permition->getName(). ' removed', Messager::FAILURE);
+			}
 		
-		foreach($controllerFiles as $controller){
 			$actions = $controller->getActions();
-			foreach($actions as $action){
-				$permission = Yii::$app->authManager->createPermission($action->getRuleName());
-				$permission->description = $action->getDescription();
-				Yii::$app->authManager->add($permission);
+			foreach ($actions as $action) {
+				if (!$action->isNew()) {
+					Messager::getInstance()->showMessage('Permission ' . $action->getRuleName(). ' exists', Messager::WARNING);
+					continue;
+				}
+				$action->getPermission()->save();
+				Messager::getInstance()->showMessage('Permission ' . $action->getRuleName(). ' created', Messager::SUCCSESS);
 			}
 		}
 	}
@@ -35,7 +45,7 @@ class RuleCommand implements CommandInterface {
 	{
 		
 	}
-	
+
 	protected function getScanPathes()
 	{
 		$pathArray = \Yii::$app->controller->module->scan_path;
@@ -44,8 +54,5 @@ class RuleCommand implements CommandInterface {
 		}
 		return $pathArray;
 	}
-
-
-	
 
 }

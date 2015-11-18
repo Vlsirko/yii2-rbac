@@ -5,6 +5,8 @@ namespace RbacRuleManager\models\file;
 use RbacRuleManager\models\action\Action;
 use ReflectionClass;
 use ReflectionMethod;
+use RbacRuleManager\models\Permission\Permission;
+use RbacRuleManager\controllers\ObservableRbacController;
 
 /**
  * Representing Controller File
@@ -15,11 +17,25 @@ class ControllerFile extends AbstractFile {
 
 	private $reflectionClass;
 	private $moduleName;
+	private $existsRulesStorage = [];
+	private $actionsStorage;
 
 	public function getActions()
 	{
-		$allMethods = $this->getReflection()->getMethods(ReflectionMethod::IS_PUBLIC);
-		return $this->handleActions($allMethods);
+		if (is_null($this->actionsStorage)) {
+			$allMethods = $this->getReflection()->getMethods(ReflectionMethod::IS_PUBLIC);
+			$this->actionsStorage = $this->handleActions($allMethods);
+		}
+		return $this->actionsStorage;
+	}
+
+	private function getActionsPermittionsNamesArray()
+	{
+		$toReturn = [];
+		foreach ($this->getActions() as $action) {
+			$toReturn[] = $action->getRuleName();
+		}
+		return $toReturn;
 	}
 
 	private function getReflection()
@@ -54,15 +70,46 @@ class ControllerFile extends AbstractFile {
 	public function getModuleName()
 	{
 		if (is_null($this->moduleName)) {
-			$comment = $this->getReflection()->getDocComment();
-			$this->moduleName = AbstractFile::getPhpDocByTag($comment, '@module');
+			$this->moduleName =$this->executeControllerMethod(ObservableRbacController::MODULE_NAME_METHOD);
 		}
-		
 		return $this->moduleName;
 	}
-	
-	public function getName(){
-		return array_pop(explode('\\',$this->getReflection()->name));
+
+	public function getName()
+	{
+		return array_pop(explode('\\', $this->getReflection()->name));
+	}
+
+	public function getExistsPermissions()
+	{
+		if (empty($this->existsRulesStorage)) {
+			$this->existsRulesStorage = Permission::getByIdentificator($this->getIdentificator());
+		}
+
+		return $this->existsRulesStorage;
+	}
+
+	public function getIdentificator()
+	{
+		return Action::createIdentificator([$this->getModuleName(), $this->getName()]);
+	}
+
+	public function getNotUsedPermissions()
+	{
+		$actionsPermittionsNames = $this->getActionsPermittionsNamesArray();
+		$existsPermitionsNames = array_keys($this->getExistsPermissions());
+		$notUsedPermitionsNames = array_diff($existsPermitionsNames, $actionsPermittionsNames);
+
+		$toReturn = [];
+		foreach ($notUsedPermitionsNames as $name) {
+			$toReturn[] = $this->getExistsPermissions()[$name];
+		}
+		return $toReturn;
+	}
+
+	public function executeControllerMethod($methodName)
+	{
+		return call_user_func([$this->getReflection()->name, $methodName]);
 	}
 
 }

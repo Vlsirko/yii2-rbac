@@ -13,11 +13,22 @@ namespace RbacRuleManager\models\FileScanner\strategy;
  *
  * @author Sirenko Vlad
  */
-class ControllerStrategy implements FileScannerStrategyInterface{
-	
+class ControllerStrategy implements FileScannerStrategyInterface {
+
+	const OBSERVABLE_INTERFACE = 'ObservableRbacController';
+
 	public function isFileSuitable($pathToFile)
 	{
-		return strpos($pathToFile, 'Controller.php') !== false;
+
+
+		return strpos($pathToFile, 'Controller.php') !== false && $this->isInterfaceImplements($pathToFile);
+	}
+
+	public function isInterfaceImplements($pathTofile)
+	{
+		$fileCode = file_get_contents($pathTofile);
+		$pattern = "#implements [\w\\\]*" . self::OBSERVABLE_INTERFACE. "#im";
+		return preg_match($pattern, $fileCode);
 	}
 
 }
