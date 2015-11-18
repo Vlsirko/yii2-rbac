@@ -6,12 +6,6 @@
 
 This extention allows you to create rbac permitions from Controller Files
 
-
-**Requirements:**
-
-* Yii2 framework (basic or advanced template)
-* Yii2 gii module
-
 ----------
 
 **Instalation via composer:**
@@ -50,9 +44,7 @@ Add this module to console configuration
 ----------
 
 **Generating permitions:**
-* Every controller must implements RbacRuleManager\controllers\ObservableRbacController interface
-
-`class DefaultController extends Controller implements ObservableRbacController {...`
+* Every observable controller must implement RbacRuleManager\controllers\ObservableRbacController interface
 
 * You must redifine 2 methods: "getModuleName" and "getActionsAliasArray"
 ```
