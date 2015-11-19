@@ -25,6 +25,7 @@ class Role extends AbstractPermitionEntity {
 	{
 		return self::getAuthManager()->getRoles();
 	}
+	
 
 	public function getPermissions()
 	{
@@ -73,15 +74,12 @@ class Role extends AbstractPermitionEntity {
 		self::getAuthManager()->update($this->name, $role);
 	}
 
-	public function getAttributesLabels()
-	{
-		return [
-			'name' => 'name',
-			'description' => 'Название',
-			'permissions' => 'Права группы'
-		];
+	public function addPermission(Permission $permission){
+		
+		self::getAuthManager()->addChild($this->getRbacItem(), $permission->getRbacItem());
 	}
-
+	
+	
 	public function getAttributes()
 	{
 		$toReturn = [];
@@ -90,6 +88,15 @@ class Role extends AbstractPermitionEntity {
 			$toReturn[$atribute] = $this->$atribute;
 		}
 		return $toReturn;
+	}
+	
+	public function getAttributesLabels()
+	{
+		return [
+			'name' => 'name',
+			'description' => 'Название',
+			'permissions' => 'Права группы'
+		];
 	}
 
 	public function getValidationRules()
@@ -128,10 +135,5 @@ class Role extends AbstractPermitionEntity {
 		}
 		
 		return $this->rbacItem ;
-	}
-	
-	public function addPermission(Permission $permission){
-		
-		self::getAuthManager()->addChild($this->getRbacItem(), $permission->getRbacItem());
 	}
 }

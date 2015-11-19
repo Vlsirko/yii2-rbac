@@ -13,36 +13,16 @@ class Permission extends AbstractPermitionEntity {
 
 	const TABLE_NAME = 'auth_item';
 
-	public function save()
-	{
-		$permission = self::getAuthManager()->createPermission($this->name);
-		$permission->description = $this->description;
-		self::getAuthManager()->add($permission);
-	}
-
-	public function delete()
-	{
-		$permission = self::getAuthManager()->createPermission($this->name);
-		self::getAuthManager()->remove($permission);
-	}
-
 	public static function getByIdentificator($identificator)
 	{
 		$raw = self::getFindCommand($identificator)->queryAll();
-		return self::hydrateArray($raw);
+		return self::hydrateArrayOfAssocArrays($raw);
 	}
 
 	public static function getByRole($roleName)
 	{
 		$roles = self::getAuthManager()->getPermissionsByRole($roleName);
-		return self::hydrateObjectsArray($roles);
-	}
-
-	public static function getAllAsAssoc()
-	{
-
-		$permissions = self::getAuthManager()->getPermissions();
-		return self::convertRbacItemsArrayToAssoc($permissions);
+		return self::hydrateArrayOfRbacItemsObjects($roles);
 	}
 
 	public static function getByName($permissionName)
@@ -51,6 +31,12 @@ class Permission extends AbstractPermitionEntity {
 		if ($yii_permission) {
 			return self::hydrateRbacItem($yii_permission);
 		}
+	}
+
+	public static function getAllAsAssoc()
+	{
+		$permissions = self::getAuthManager()->getPermissions();
+		return self::convertRbacItemsArrayToAssoc($permissions);
 	}
 
 	private static function getFindCommand($name)
@@ -63,7 +49,7 @@ class Permission extends AbstractPermitionEntity {
 				->createCommand();
 	}
 
-	private static function hydrateArray(array $raw)
+	public static function hydrateArrayOfAssocArrays(array $raw)
 	{
 		$toReturn = [];
 		foreach ($raw as $row) {
@@ -74,7 +60,7 @@ class Permission extends AbstractPermitionEntity {
 		return $toReturn;
 	}
 
-	public static function hydrateObjectsArray(array $raw)
+	public static function hydrateArrayOfRbacItemsObjects(array $raw)
 	{
 		$toReturn = [];
 		foreach ($raw as $row) {
@@ -83,6 +69,19 @@ class Permission extends AbstractPermitionEntity {
 			}
 		}
 		return $toReturn;
+	}
+
+	public function save()
+	{
+		$permission = self::getAuthManager()->createPermission($this->name);
+		$permission->description = $this->description;
+		self::getAuthManager()->add($permission);
+	}
+
+	public function delete()
+	{
+		$permission = self::getAuthManager()->createPermission($this->name);
+		self::getAuthManager()->remove($permission);
 	}
 
 	public function getRbacItem()
