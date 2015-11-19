@@ -1,6 +1,6 @@
 <?php
 
-namespace RbacRuleManager\models\FileScanner\factories;
+namespace Rbac\models\FileScanner\factories;
 
 /**
  * Description of ScanerAbstractFactory

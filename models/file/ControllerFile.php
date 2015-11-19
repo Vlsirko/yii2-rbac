@@ -1,12 +1,12 @@
 <?php
 
-namespace RbacRuleManager\models\file;
+namespace Rbac\models\file;
 
-use RbacRuleManager\models\action\Action;
+use Rbac\models\action\Action;
 use ReflectionClass;
 use ReflectionMethod;
-use RbacRuleManager\models\Permission\Permission;
-use RbacRuleManager\controllers\ObservableRbacController;
+use Rbac\models\Permitions\Permission;
+use Rbac\interfaces\ObservableRbacController;
 
 /**
  * Representing Controller File

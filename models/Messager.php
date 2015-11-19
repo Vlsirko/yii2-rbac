@@ -1,6 +1,6 @@
 <?php
 
-namespace RbacRuleManager\models;
+namespace Rbac\models;
 
 /**
  * Description of Messager

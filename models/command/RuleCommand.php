@@ -1,10 +1,10 @@
 <?php
 
-namespace RbacRuleManager\models\command;
+namespace Rbac\models\command;
 
-use RbacRuleManager\models\command\CommandInterface;
-use RbacRuleManager\models\FileScanner\factories\ScanerAbstractFactory;
-use RbacRuleManager\models\Messager;
+use Rbac\models\command\CommandInterface;
+use Rbac\models\FileScanner\factories\ScanerAbstractFactory;
+use Rbac\models\Messager;
 /**
  * This command is responsible for creating rbac rules
  * and rollback all changes
@@ -25,7 +25,7 @@ class RuleCommand implements CommandInterface {
 			$notUsedPermissions = $controller->getNotUsedPermissions();
 			
 			foreach($notUsedPermissions as $permition){
-				$permition->remove();
+				$permition->delete();
 				Messager::getInstance()->showMessage('Permission ' . $permition->getName(). ' removed', Messager::FAILURE);
 			}
 		

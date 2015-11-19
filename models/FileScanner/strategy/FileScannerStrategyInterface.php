@@ -6,7 +6,7 @@
  * and open the template in the editor.
  */
 
-namespace RbacRuleManager\models\FileScanner\strategy;
+namespace Rbac\models\FileScanner\strategy;
 
 /**
  * Description of FileScannerStrategyInterface

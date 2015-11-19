@@ -6,7 +6,7 @@
  * and open the template in the editor.
  */
 
-namespace RbacRuleManager\models\command;
+namespace Rbac\models\command;
 
 /**
  * Description of commandFactory

@@ -1,6 +1,6 @@
 <?php
 
-namespace RbacRuleManager\models\command;
+namespace Rbac\models\command;
 
 /**
  * Description of CommandInterface

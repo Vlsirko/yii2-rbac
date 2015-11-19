@@ -6,7 +6,7 @@
  * and open the template in the editor.
  */
 
-namespace RbacRuleManager\models\FileScanner\factories;
+namespace Rbac\models\FileScanner\factories;
 
 /**
  *
@@ -15,7 +15,7 @@ namespace RbacRuleManager\models\FileScanner\factories;
 interface FactoryInterface {
 	
 	/**
-	 * @return RbacRuleManager\models\FileScanner\FileScanner
+	 * @return Rbac\models\FileScanner\FileScanner
 	 */
 	public function getScanner();
 }

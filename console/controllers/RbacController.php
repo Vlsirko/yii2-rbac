@@ -1,9 +1,9 @@
 <?php
 
-namespace RbacRuleManager\controllers;
+namespace Rbac\console\controllers;
 
 use yii\console\Controller;
-use RbacRuleManager\models\command\CommandFactory;
+use Rbac\models\command\CommandFactory;
 
 class RbacController extends Controller {
 

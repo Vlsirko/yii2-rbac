@@ -1,6 +1,6 @@
 <?php
 
-namespace RbacRuleManager\models\file;
+namespace Rbac\models\file;
 
 /**
  * Representing of php class file

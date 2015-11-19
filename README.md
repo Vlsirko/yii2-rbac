@@ -44,7 +44,7 @@ Add this module to console configuration
 ----------
 
 **Generating permitions:**
-* Every observable controller must implement **_RbacRuleManager\controllers\ObservableRbacController interface_**
+* Every observable controller must implement **_RbacRuleManager\controllers\ObservableRbacController_** interface
 
 * You must redifine 2 methods: "getModuleName" and "getActionsAliasArray"
 ```

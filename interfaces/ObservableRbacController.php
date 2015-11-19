@@ -1,6 +1,6 @@
 <?php
 
-namespace RbacRuleManager\controllers;
+namespace Rbac\interfaces;
 
 /**
  *

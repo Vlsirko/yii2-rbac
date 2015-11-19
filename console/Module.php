@@ -1,10 +1,10 @@
 <?php
 
-namespace RbacRuleManager;
+namespace Rbac\console;
 
 class Module extends \yii\base\Module
 {
-    public $controllerNamespace = 'RbacRuleManager\controllers';
+    public $controllerNamespace = 'Rbac\console\controllers';
 	
 	public $scan_path = [];
 	

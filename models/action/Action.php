@@ -6,12 +6,12 @@
  * and open the template in the editor.
  */
 
-namespace RbacRuleManager\models\action;
+namespace Rbac\models\action;
 
-use RbacRuleManager\models\file\ControllerFile;
+use Rbac\models\file\ControllerFile;
 use ReflectionMethod;
-use RbacRuleManager\models\Permission\Permission;
-use RbacRuleManager\controllers\ObservableRbacController;
+use Rbac\models\Permitions\Permission;
+use Rbac\controllers\ObservableRbacController;
 
 /**
  * Representing Controler Actions

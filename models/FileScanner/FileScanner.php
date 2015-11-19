@@ -6,11 +6,11 @@
  * and open the template in the editor.
  */
 
-namespace RbacRuleManager\models\FileScanner;
+namespace Rbac\models\FileScanner;
 
-use RbacRuleManager\models\FileScanner\strategy\FileScannerStrategyInterface;
-use RbacRuleManager\models\file\AbstractFile;
-use RbacRuleManager\models\Messager;
+use Rbac\models\FileScanner\strategy\FileScannerStrategyInterface;
+use Rbac\models\file\AbstractFile;
+use Rbac\models\Messager;
 
 /**
  * Search files in sys by search_strategy

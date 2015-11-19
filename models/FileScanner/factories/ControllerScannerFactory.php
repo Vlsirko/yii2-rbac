@@ -6,11 +6,11 @@
  * and open the template in the editor.
  */
 
-namespace RbacRuleManager\models\FileScanner\factories;
+namespace Rbac\models\FileScanner\factories;
 
-use RbacRuleManager\models\FileScanner\strategy\ControllerStrategy;
-use RbacRuleManager\models\FileScanner\FileScanner;
-use RbacRuleManager\models\file\ControllerFile;
+use Rbac\models\FileScanner\strategy\ControllerStrategy;
+use Rbac\models\FileScanner\FileScanner;
+use Rbac\models\file\ControllerFile;
 
 /**
  * Description of ControllerScannerFactory
