@@ -32,15 +32,18 @@ class RuleCommand implements CommandInterface {
 			$actions = $controller->getActions();
 			foreach ($actions as $action) {
 				if (!$action->isNew()) {
-					Messager::getInstance()->showMessage('Permission ' . $action->getRuleName(). ' exists', Messager::WARNING);
+					Messager::getInstance()->showMessage('Permission ' . $action->getIdentificator(). ' exists', Messager::WARNING);
 					continue;
 				}
 				$action->getPermission()->save();
-				Messager::getInstance()->showMessage('Permission ' . $action->getRuleName(). ' created', Messager::SUCCSESS);
+				Messager::getInstance()->showMessage('Permission ' . $action->getIdentificator(). ' created', Messager::SUCCSESS);
 			}
 		}
 	}
-
+	
+	/**
+	 * @TODO
+	 */
 	public function rollback()
 	{
 		

@@ -15,18 +15,30 @@ class Role extends AbstractPermitionEntity {
 
 	protected $permissions = [];
 
-	public static function getRoleByAlias($alias)
+	/**
+	 * Returns role by name
+	 * @param type $roleName
+	 * @return \self
+	 */
+	public static function getRoleByName($roleName)
 	{
-		$yiiRole = self::getAuthManager()->getRole($alias);
+		$yiiRole = self::getAuthManager()->getRole($roleName);
 		return new self($yiiRole->name, $yiiRole->description);
 	}
 
+	/**
+	 * Returns all roles as array of yii\rbac\items
+	 * @return array
+	 */
 	public static function getAllRoles()
 	{
 		return self::getAuthManager()->getRoles();
 	}
-	
 
+	/**
+	 * Returns array of Rbac\models\Permitions\Permissions which this role contains
+	 * @return array
+	 */
 	public function getPermissions()
 	{
 		if (empty($this->permissions)) {
@@ -35,29 +47,52 @@ class Role extends AbstractPermitionEntity {
 
 		return $this->permissions;
 	}
+	
+	/**
+	 * Returns array of Rbac\models\Permitions\Permissions which this role contains
+	 * @return array
+	 */
+	public function setPermissions($permissions)
+	{
+		$this->permissions = $permissions;
+	}
 
+	/**
+	 * Returns array of permissions, represented as associative array, which this role contains
+	 * @return array
+	 */
 	public function getPermissionsAsAssoc()
 	{
 		return self::convertRbacItemsArrayToAssoc(Permission::getByRole($this->name));
 	}
 
+	/**
+	 * Returns array of permissions for yii2 dropdown
+	 * @return array
+	 */
 	public function getPermitionsForDropdown()
 	{
-
 		$selected = array_keys($this->getPermissions());
 		$toReturn = [];
 		foreach ($selected as $permissionAlias) {
 			$toReturn[$permissionAlias] = ['selected' => 'selected'];
 		}
-		
 		return $toReturn;
 	}
+
+	/*
+	 * @inheritdoc
+	 */
 
 	public function delete()
 	{
 		$role = self::getAuthManager()->createRole($this->name);
 		self::getAuthManager()->remove($role);
 	}
+
+	/*
+	 * @inheritdoc
+	 */
 
 	public function save()
 	{
@@ -67,6 +102,10 @@ class Role extends AbstractPermitionEntity {
 		return true;
 	}
 
+	/*
+	 * @inheritdoc
+	 */
+
 	public function update()
 	{
 		$role = self::getAuthManager()->createRole($this->name);
@@ -74,12 +113,16 @@ class Role extends AbstractPermitionEntity {
 		self::getAuthManager()->update($this->name, $role);
 	}
 
-	public function addPermission(Permission $permission){
-		
+	public function addPermission(Permission $permission)
+	{
+
 		self::getAuthManager()->addChild($this->getRbacItem(), $permission->getRbacItem());
 	}
-	
-	
+
+	/*
+	 * @inheritdoc
+	 */
+
 	public function getAttributes()
 	{
 		$toReturn = [];
@@ -89,7 +132,11 @@ class Role extends AbstractPermitionEntity {
 		}
 		return $toReturn;
 	}
-	
+
+	/*
+	 * @inheritdoc
+	 */
+
 	public function getAttributesLabels()
 	{
 		return [
@@ -99,6 +146,10 @@ class Role extends AbstractPermitionEntity {
 		];
 	}
 
+	/*
+	 * @inheritdoc
+	 */
+
 	public function getValidationRules()
 	{
 		return [
@@ -107,6 +158,10 @@ class Role extends AbstractPermitionEntity {
 			['permissions', 'safe']
 		];
 	}
+
+	/*
+	 * @inheritdoc
+	 */
 
 	public function behaviours()
 	{
@@ -122,18 +177,26 @@ class Role extends AbstractPermitionEntity {
 			]
 		];
 	}
-	
-	
-	public function revokeAllPermissions(){
-		self::getAuthManager()->removeChildren($this->getRbacItem());
+
+	/**
+	 * Removes relations between current role and all permission which it has
+	 * @return bool
+	 */
+	public function revokeAllPermissions()
+	{
+		return self::getAuthManager()->removeChildren($this->getRbacItem());
 	}
-	
+
+	/**
+	 * @inheritdoc
+	 */
 	public function getRbacItem()
 	{
-		if(is_null($this->rbacItem)){
+		if (is_null($this->rbacItem)) {
 			$this->rbacItem = self::getAuthManager()->getRole($this->name);
 		}
-		
-		return $this->rbacItem ;
+
+		return $this->rbacItem;
 	}
+
 }

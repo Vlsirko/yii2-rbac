@@ -22,7 +22,12 @@ class FileScanner {
 	protected $strategy;
 	protected $prototype;
 	protected $scanPathes = [];
-
+	
+	/**
+	 * 
+	 * @param FileScannerStrategyInterface $strategy Strategy by what file will be found
+	 * @param AbstractFile $prototype Prototype of object, instances of which will be returned
+	 */
 	public function __construct(FileScannerStrategyInterface $strategy, AbstractFile $prototype)
 	{
 		$this->strategy = $strategy;

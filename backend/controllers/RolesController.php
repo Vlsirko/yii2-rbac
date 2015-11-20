@@ -27,7 +27,7 @@ class RolesController extends Controller
     public function actionView($id)
     {
         return $this->render('view', [
-            'model' => Role::getRoleByAlias($id),
+            'model' => Role::getRoleByName($id),
         ]);
     }
 	
@@ -68,7 +68,7 @@ class RolesController extends Controller
 	
 	protected function findModel($id)
     {
-        if (($model = Role::findByName($id)) !== null) {
+        if (($model = Role::getRoleByName($id)) !== null) {
             return new ActiveRecordAdapter($model);
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

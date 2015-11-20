@@ -33,7 +33,7 @@ class ControllerFile extends AbstractFile {
 	{
 		$toReturn = [];
 		foreach ($this->getActions() as $action) {
-			$toReturn[] = $action->getRuleName();
+			$toReturn[] = $action->getIdentificator();
 		}
 		return $toReturn;
 	}
@@ -83,7 +83,7 @@ class ControllerFile extends AbstractFile {
 	public function getExistsPermissions()
 	{
 		if (empty($this->existsRulesStorage)) {
-			$this->existsRulesStorage = Permission::getByIdentificator($this->getIdentificator());
+			$this->existsRulesStorage = Permission::getByModuleIdentificator($this->getIdentificator());
 		}
 
 		return $this->existsRulesStorage;

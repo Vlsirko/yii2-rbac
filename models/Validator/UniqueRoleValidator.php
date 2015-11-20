@@ -7,8 +7,7 @@ use Rbac\models\Permitions\AbstractPermitionEntity;
 use Rbac\models\Helpers\TranslitHelper;
 
 /**
- * Description of UniqueRoleValidator
- *
+ * Validates role on uniqueness
  * @author vlad
  */
 class UniqueRoleValidator extends Validator{
