@@ -3,6 +3,8 @@
 namespace Rbac\models\Permitions;
 
 use yii\db\Query;
+use yii\web\Controller;
+
 
 /**
  * This Class is Facade of standart Yii2 auth permission
@@ -111,6 +113,7 @@ class Permission extends AbstractPermitionEntity {
 		return $toReturn;
 	}
 	
+
 	/**
 	 * @inheritdoc
 	 */

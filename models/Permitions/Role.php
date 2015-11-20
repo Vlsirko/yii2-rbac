@@ -13,7 +13,7 @@ class Role extends AbstractPermitionEntity {
 
 	const CREATE_SCENARIO = 'create';
 
-	protected $permissions = [];
+	private $permissionsArray = [];
 
 	/**
 	 * Returns role by name
@@ -36,10 +36,25 @@ class Role extends AbstractPermitionEntity {
 	}
 
 	/**
-	 * Returns array of Rbac\models\Permitions\Permissions which this role contains
+	 * Returns array of permission names which this rele contains
 	 * @return array
 	 */
 	public function getPermissions()
+	{
+		
+		if (empty($this->permissionsArray)) {
+			$this->permissionsArray = array_keys(Permission::getByRole($this->name));
+			
+		}
+		
+		return $this->permissionsArray;
+	}
+	
+	/**
+	 * Returns array of Rbac\models\Permitions\Permissions which this role contains
+	 * @return array
+	 */
+	public function getPermissionsAsObjectArray()
 	{
 		if (empty($this->permissions)) {
 			$this->permissions = Permission::getByRole($this->name);
@@ -54,7 +69,7 @@ class Role extends AbstractPermitionEntity {
 	 */
 	public function setPermissions($permissions)
 	{
-		$this->permissions = $permissions;
+		$this->permissionsArray = $permissions;
 	}
 
 	/**
@@ -72,7 +87,7 @@ class Role extends AbstractPermitionEntity {
 	 */
 	public function getPermitionsForDropdown()
 	{
-		$selected = array_keys($this->getPermissions());
+		$selected = $this->getPermissions();
 		$toReturn = [];
 		foreach ($selected as $permissionAlias) {
 			$toReturn[$permissionAlias] = ['selected' => 'selected'];

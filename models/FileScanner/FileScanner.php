@@ -1,11 +1,5 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 namespace Rbac\models\FileScanner;
 
 use Rbac\models\FileScanner\strategy\FileScannerStrategyInterface;
@@ -24,9 +18,8 @@ class FileScanner {
 	protected $scanPathes = [];
 	
 	/**
-	 * 
-	 * @param FileScannerStrategyInterface $strategy Strategy by what file will be found
-	 * @param AbstractFile $prototype Prototype of object, instances of which will be returned
+	 * @param FileScannerStrategyInterface $strategy Strategy which determines what file will be acceptable
+	 * @param AbstractFile $prototype Prototype of object, whose instances will be returned
 	 */
 	public function __construct(FileScannerStrategyInterface $strategy, AbstractFile $prototype)
 	{

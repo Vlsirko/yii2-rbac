@@ -15,9 +15,7 @@ use Rbac\models\Permitions\Permission;
 	
     <?= $form->field($model, 'description')->textInput() ?>
 	<?php //var_dump($model->getPermitionsForDropdown()); die();?>
-	<?php 
-		$model->permissions = array_keys( $model->getPermitionsForDropdown());
-	?>
+	
 	 <?= $form->field($model, 'permissions')->listBox(Permission::getAllAsAssoc(), ['multiple' => true, 'size'=>50]);?>
 	
     <div class="form-group">
