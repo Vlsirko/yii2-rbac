@@ -1,5 +1,5 @@
 
-**yii2-rbac-rule-generator**
+**yii2-rbac**
 =======
 
 > *This is beta version, and may contain some bugs
