@@ -1,6 +1,8 @@
 {
     "name": "vlsirko/yii2-rbac",
     "description": "Generate access rules from controllers and manage roles and permissions",
+	"type": "yii2-extension",
+    "keywords": ["yii2","extension"],
     "authors": [
         {
             "name": "Sirenko Vlad",
@@ -9,7 +11,7 @@
     ],
 	"autoload": {
         "psr-4": {
-            "Rbac\\": "Rbac/"
+            "Rbac\\": ""
         }
     }
 }
