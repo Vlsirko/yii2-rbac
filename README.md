@@ -94,7 +94,7 @@ If controller doesn't belongs to module, you can just return empty string in "ge
 * execute module in shell `$ ./yii rbac_rule/rbac rules`
  
 
-** Managing roles and permissions, checking access**
+**Managing roles and permissions, checking access**
 
 * Every controller which needs in limiting access must use rbac_controll behaviour. Add to your controller this behavior: 
 ```
