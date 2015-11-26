@@ -9,7 +9,33 @@ This extention allows you to create rbac permitions from Controller Files
 ----------
 
 **Instalation via composer:**
------------------------------
+
+ * Add to yours *composer.json* in "require" field:
+```
+	"vlsirko/yii2-rbac" : "dev-master"
+```
+ * Add to yours *composer.json* in "repositories" field:
+```
+{
+	"url" : "https://github.com/Vlsirko/yii2-rbac.git",
+	"type" : "git"
+}
+```
+ * Run `*./composer.phar update*` in shell
+ * Change your configuration file:
+
+Add this module to console configuration
+
+```  
+    'rbac_rule' => [
+		'class' => 'RbacRuleManager\Module',
+		'scan_path' => [
+			'path to directory with controller files (yii alias is accepted)'
+		]
+	]
+```	
+
+
  * Change the class of authManager in your config file:
 ```
 return [
@@ -24,32 +50,6 @@ return [
 ```
 
 * Run yii2 rbac migrations by command: `yii migrate --migrationPath=@yii/rbac/migrations`
-
- * Add to yours *composer.json* in "require" field:
-```
-	"Vlsirko/yii2-rbac-rule-generator" : "dev-master"
-```
- * Add to yours *composer.json* in "repositories" field:
-```
-{
-	"url" : "https://github.com/Vlsirko/yii2-rbac.git",
-	"type" : "git"
-}
-```
- * Run `*./composer.phar update*` in shell
- * Change your configuration file:
-
-
-Add this module to console configuration
-
-```  
-    'rbac_rule' => [
-		'class' => 'RbacRuleManager\Module',
-		'scan_path' => [
-			'path to directory with controller files (yii alias is accepted)'
-		]
-	]
-```	
 
 * Run modules migrations by command: `yii migrate --migrationPath=@vendor/vlsirko/rbac/migrations`
 	
