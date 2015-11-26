@@ -32,7 +32,7 @@ return [
  * Add to yours *composer.json* in "repositories" field:
 ```
 {
-	"url" : "https://github.com/Vlsirko/yii2-rbac-rule-generator.git",
+	"url" : "https://github.com/Vlsirko/yii2-rbac.git",
 	"type" : "git"
 }
 ```

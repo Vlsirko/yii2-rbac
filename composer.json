@@ -1,0 +1,11 @@
+{
+    "name": "vlsirko/yii2-rbac",
+    "description": "Generate access rules from controllers and manage roles and permissions",
+    "authors": [
+        {
+            "name": "Sirenko Vlad",
+            "email": "Vlsirko89@gmail.com"
+        }
+    ],
+    "require": {}
+}
