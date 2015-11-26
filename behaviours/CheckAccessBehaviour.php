@@ -3,8 +3,7 @@
 namespace Rbac\behaviours;
 
 use yii\base\Behavior;
-use yii\base\Controller;
-use Rbac\models\action\Action;
+use Rbac\models\Permitions\Permission;
 use yii\web\ForbiddenHttpException;
 use yii\base\Module;
 
@@ -24,9 +23,14 @@ class CheckAccessBehaviour extends Behavior {
 
 	public function checkAccess($event)
 	{
-		$permissionName = Action::getPermissionNameViaAction($event->action);
+		$permissionName = Permission::getPermissionNameViaAction($event->action);
 		
-		if(\yii::$app->user->can($permissionName)){
+		if(\yii::$app->user->getIsGuest() && \Yii::$app->controller->action->id !== 'login'){
+			return \Yii::$app->getResponse()->redirect(\Yii::$app->getUser()->loginUrl);
+		}
+		
+		
+		if(!Permission::isExists($permissionName) || \yii::$app->user->can($permissionName)){
 			return;
 		}
 		

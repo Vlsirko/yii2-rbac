@@ -102,19 +102,7 @@ class Action {
 		return implode('/', $params);
 	}
 
-	/**
-	 * @param InlineAction $action 
-	 * @return string Identificator of permission
-	 */
-	public static function getPermissionNameViaAction(InlineAction $action)
-	{
-		return self::createIdentificator([
-				$action->controller->module->id,
-				array_pop(explode('\\', $action->controller->className())),
-				str_replace('action', '', $action->actionMethod)
-		]);
-	}
-
+	
 	protected static function convertToLowerCase(&$paramsArray)
 	{
 		foreach ($paramsArray as &$param) {

@@ -10,6 +10,20 @@ This extention allows you to create rbac permitions from Controller Files
 
 **Instalation via composer:**
 -----------------------------
+ * Change the class of authManager in your config file:
+```
+return [
+    // ...
+    'components' => [
+        'authManager' => [
+            'class' => 'yii\rbac\DbManager',
+        ],
+        // ...
+    ],
+];
+```
+
+* Run yii2 rbac migrations by command: `yii migrate --migrationPath=@yii/rbac/migrations`
 
  * Add to yours *composer.json* in "require" field:
 ```
@@ -37,6 +51,21 @@ Add this module to console configuration
 	]
 ```	
 
+* Run modules migrations by command: `yii migrate --migrationPath=@vendor/vlsirko/rbac/migrations`
+	
+	This command will create permissions wich are responsible for managing roles and permissions. 
+	Also, this migration adds recently created permissions to all users.
+
+
+* Finally, you need to add Rbac module to backend application. Add to your backend modules config next code:
+```
+	'rbac' => [
+		'class' => 'Rbac\backend\Module',
+		'defaultRoute' => 'roles/index'
+	]
+```
+
+
 
 ----------
 
@@ -46,7 +75,7 @@ Add this module to console configuration
 **Generating permitions:**
 * Every observable controller must implement **_RbacRuleManager\controllers\ObservableRbacController_** interface
 
-* You must redifine 2 methods: "getModuleName" and "getActionsAliasArray"
+* You must redifine 2 methods: "getModuleName" and "getActionsAliasArray" 
 ```
 	public function getModuleName()
 	{
@@ -64,3 +93,47 @@ If controller doesn't belongs to module, you can just return empty string in "ge
 
 * execute module in shell `$ ./yii rbac_rule/rbac rules`
  
+
+** Managing roles and permissions, checking access**
+
+* Every controller which needs in limiting access must use rbac_controll behaviour. Add to your controller this behavior: 
+```
+	public function behaviors()
+    {
+        return [
+            ///
+			'rbac_controll' =>[
+				'class' => 'Rbac\behaviours\CheckAccessBehaviour',
+			],
+			///
+        ];
+    }
+```
+Standart access control can be removed
+
+* Add To your User Form next input:
+
+```
+	<?=$form->field($model, 'role')->dropDownList(Rbac\models\Permitions\Role::getAllRolesForDropdown()) ?>
+```
+* User class must extends Rbac\models\RbacAbstractUserActiveRecord abstract class instead ActiveRecord class:
+```
+class User extends RbacAbstractUserActiveRecord implements IdentityInterface {
+
+	const STATUS_DISABLED = 0;
+	const STATUS_ENABLED = 1;
+///
+//
+```
+* Add to user model following behaviour:
+
+```
+	public function behaviors()
+	{
+		return [
+			TimestampBehavior::className(),
+			SaveUserRole::className(),
+			///
+		];
+	}
+```

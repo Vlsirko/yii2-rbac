@@ -36,20 +36,34 @@ class Role extends AbstractPermitionEntity {
 	}
 
 	/**
+	 * Returns all roles as assoc array for dropdown, where key is role id (name)
+	 * and value is role title
+	 * @return array
+	 */
+	public static function getAllRolesForDropdown()
+	{
+		$roles = self::getAuthManager()->getRoles();
+		$toReturn = [];
+		foreach ($roles as $role) {
+			$toReturn[$role->name] = $role->description;
+		}
+		return $toReturn;
+	}
+
+	/**
 	 * Returns array of permission names which this rele contains
 	 * @return array
 	 */
 	public function getPermissions()
 	{
-		
+
 		if (empty($this->permissionsArray)) {
 			$this->permissionsArray = array_keys(Permission::getByRole($this->name));
-			
 		}
-		
+
 		return $this->permissionsArray;
 	}
-	
+
 	/**
 	 * Returns array of Rbac\models\Permitions\Permissions which this role contains
 	 * @return array
@@ -62,7 +76,7 @@ class Role extends AbstractPermitionEntity {
 
 		return $this->permissions;
 	}
-	
+
 	/**
 	 * Returns array of Rbac\models\Permitions\Permissions which this role contains
 	 * @return array

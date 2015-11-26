@@ -3,7 +3,8 @@
 namespace Rbac\models\Permitions;
 
 use yii\db\Query;
-use yii\web\Controller;
+use yii\base\InlineAction;
+use Rbac\models\action\Action;
 
 
 /**
@@ -53,6 +54,7 @@ class Permission extends AbstractPermitionEntity {
 		if ($yii_permission) {
 			return self::hydrateRbacItem($yii_permission);
 		}
+		return false;
 	}
 
 	/**
@@ -111,6 +113,29 @@ class Permission extends AbstractPermitionEntity {
 			}
 		}
 		return $toReturn;
+	}
+	
+	/**
+	 * @param InlineAction $action 
+	 * @return string Identificator of permission
+	 */
+	public static function getPermissionNameViaAction(InlineAction $action)
+	{
+		return Action::createIdentificator([
+				$action->controller->module->id,
+				array_pop(explode('\\', $action->controller->className())),
+				str_replace('action', '', $action->actionMethod)
+		]);
+	}
+	
+	/**
+	 * Checks is permission exists
+	 * @param strng $permissionName
+	 * @return bool
+	 */
+	public static function isExists($permissionName)
+	{
+		return self::getAuthManager()->getPermission($permissionName) !== null;
 	}
 	
 
