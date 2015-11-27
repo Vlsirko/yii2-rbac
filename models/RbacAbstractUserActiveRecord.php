@@ -8,6 +8,7 @@
 
 namespace Rbac\models;
 use yii\db\ActiveRecord;
+use yii\rbac\Role;
 
 /**
  * Description of AbstractUser
