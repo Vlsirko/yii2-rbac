@@ -3,6 +3,7 @@
     "description": "Generate access rules from controllers and manage roles and permissions",
 	"type": "yii2-extension",
     "keywords": ["yii2","extension"],
+	"minimum-stability": "dev",
     "authors": [
         {
             "name": "Sirenko Vlad",
