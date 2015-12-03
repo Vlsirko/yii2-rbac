@@ -23,6 +23,7 @@ class CheckAccessBehaviour extends Behavior {
 
 	public function checkAccess($event)
 	{
+
 		$permissionName = Permission::getPermissionNameViaAction($event->action);
 		
 		if(\yii::$app->user->getIsGuest() && \Yii::$app->controller->action->id !== 'login'){

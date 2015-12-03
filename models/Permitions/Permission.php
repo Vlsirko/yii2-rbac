@@ -119,12 +119,12 @@ class Permission extends AbstractPermitionEntity {
 	 * @param InlineAction $action 
 	 * @return string Identificator of permission
 	 */
-	public static function getPermissionNameViaAction(InlineAction $action)
+	public static function getPermissionNameViaAction(\yii\base\Action $action)
 	{
 		return Action::createIdentificator([
 				$action->controller->module->id,
 				array_pop(explode('\\', $action->controller->className())),
-				str_replace('action', '', $action->actionMethod)
+				str_replace('action', '', $action->id)
 		]);
 	}
 	
